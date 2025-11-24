@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+import imgLogo from "../assets/images/logo_white.png";
+
+import { fetchFromAPI } from "../lib/conection";
+
+interface ItemsMenu {
+    label: string;
+    url: string;
+}
+
+const menu: ItemsMenu[] = await fetchFromAPI('navmenus')
+---
+
+<header class="bg-black">
+    <div class="container mx-auto z-50">
+        <div class="flex justify-between h-[90px] items-center z-50">
+            <div>
+                <Image
+                    src={imgLogo}
+                    alt="Logo Starlink"
+                    width={142}
+                    height={18}
+                    class="w-[142px] h-[18px] z-50 relative"
+                />
+            </div>
+            <div>
+                <nav>
+                    <ul class="flex gap-6 relative z-50">
+                        {
+                            menu.map((item) => (
+                                <li class="text-white font-sans uppercase text-[14px] leading-[26px] hover:underline cursor-pointer">
+                                    <a href={item.url}>{item.label}</a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
